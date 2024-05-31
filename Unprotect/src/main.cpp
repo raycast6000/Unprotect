@@ -38,7 +38,10 @@ int main() {
 	for (int i = 0; i < tids.size(); i++) {
 		HANDLE hThread = OpenThread(THREAD_ALL_ACCESS, 0, tids.at(i));
 		
-		SuspendThread(hThread);
+		if (hThread) { // Checking whether the HANDLE is valid or not.
+			SuspendThread(hThread);
+			CloseHandle(hThread);
+		}
 	}
 
 	HANDLE hModSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, pid);
